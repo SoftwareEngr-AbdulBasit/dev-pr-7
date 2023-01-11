@@ -1,15 +1,23 @@
 name: Get $ Cache Dependy
 description: "Get the depenciy (via npm)"
+inputs:
+  caching:
+    description: "where to case are not"
+    required: false
+    default: "true"
+  # abc:
+  #  ... #more inputs we can use and create
 runs:
   using: "composite"
   steps:
     - name: Cache dependencies
+      if: inputs.caching == "true"
       id: cache
       uses: actions/cache@v3
       with:
         path: node_modules
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != "true"
       run: npm ci
       shell: bash
