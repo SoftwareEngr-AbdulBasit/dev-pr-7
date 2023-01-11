@@ -5,6 +5,10 @@ inputs:
     description: "where to case are not"
     required: false
     default: "true"
+outputs:
+  used-casching:
+    description: "output"
+    value: ${{steps.in-01.outputs.cache }}
   # abc:
   #  ... #more inputs we can use and create
 runs:
@@ -18,6 +22,9 @@ runs:
         path: node_modules
         key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
     - name: Install dependencies
+      id: in-01
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
-      run: npm ci
+      run: |
+        npm ci
+        echo "::set-output name:cache:: ${{ inputs.caching }}"
       shell: bash

@@ -10,10 +10,13 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Load & use custom action
+        id: c-01
         uses: ./.github/actions/cached-deps
         with:
           caching: "false"
         # uses: gitname/repo-name
+      - name: OutInfor Custome
+        run: echo "Cache used? ${{ steps.c-01.outputs.used-casching}}"
       # - name: Cache dependencies
       #   id: cache
       #   uses: actions/cache@v3
