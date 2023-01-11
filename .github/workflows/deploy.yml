@@ -74,18 +74,30 @@ jobs:
         run: ls
       - name: Deploy site
         id: d-01
-        uses: ./.github/actions/deploy-s3-js
+        uses: ./.github/actions/deploy-s3-docker
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_KEY_ID: ${{secrets.AWS_SECRET_KEY_ID}}
         with:
           bucket: abc-bucket-name
           dist-folder: ./dist
-          # bucket-region: us-east-2
-        # run: echo "Deploying..."
       - name: Output Info
         run: |
           echo "Live Url ${{steps.d-01.outputs.website-url}}"
+      # - name: Deploy site
+      #   id: d-01
+      #   uses: ./.github/actions/deploy-s3-js
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+      #     AWS_SECRET_KEY_ID: ${{secrets.AWS_SECRET_KEY_ID}}
+      #   with:
+      #     bucket: abc-bucket-name
+      #     dist-folder: ./dist
+      #     # bucket-region: us-east-2
+      #   # run: echo "Deploying..."
+      # - name: Output Info
+      #   run: |
+      #     echo "Live Url ${{steps.d-01.outputs.website-url}}"
   # information:
   #   runs-on: ubuntu-latest
   #   steps:
