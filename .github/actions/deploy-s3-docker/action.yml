@@ -1,0 +1,19 @@
+name: "Docker"
+description: "deploy docker s3"
+inputs:
+  bucket:
+    description: "bucket file name"
+    required: true
+  bucket-region:
+    description: "Region uploading code"
+    required: false
+    default: "us-east-1"
+  dist-folder:
+    description: "dist folder"
+    required: true
+outputs:
+  website-url:
+    description: "webiste url"
+runs:
+  using: "docker"
+  image: "Dockerfile"
